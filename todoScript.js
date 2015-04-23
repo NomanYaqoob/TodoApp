@@ -58,10 +58,10 @@ app.controller('AppCtrl', function($scope,$mdDialog,UserData) {
         templateUrl: 'dialog.html',
         targetEvent: ev
     })
-        .then(function() {
-            $scope.alert = 'You Added a Task';
+        .then(function(answer) {
+            $scope.alert = 'task '+answer+"!";
         }, function() {
-            $scope.alert = 'You cancelled the Task.';
+            $scope.alert = 'task Cancelled!';
         });
     };
 
@@ -79,11 +79,12 @@ function DialogController($scope, $mdDialog,UserData) {
     $scope.cancel = function() {
         $mdDialog.cancel();
     };
-    $scope.add = function() {
+    $scope.add = function(answer) {
         //console.log("add is called");
         if(!($scope.user.title == "" && $scope.user.task == "" )) {
             UserData.addTask($scope.user);
         }
+        $mdDialog.hide(answer);
         $scope.user.title = "";
         $scope.user.task = "";
         $mdDialog.hide();
@@ -99,6 +100,9 @@ app.controller('SlideView',function($scope, $log,UserData){
         previous = null;
     $scope.tabs = tabs;
     $scope.selectedIndex = 2;
+    $scope.getAllTabs = function () {
+        return UserData.getUserData();
+    };
     /*$scope.$watch('selectedIndex', function(current, old){
         previous = selected;
         selected = tabs[current];
@@ -115,10 +119,10 @@ app.controller('SlideView',function($scope, $log,UserData){
 
     };*/
 
-    $scope.addTab = function () {
+    /*$scope.addTab = function () {
         UserData.addTask($scope.user);
-        tabs.push({ title: $scope.user.title, content: $scope.user.task, disabled: false});
-    };
+        tabs.push({ title: $scope.user.title, content: $scope.user.task});
+    };*/
     $scope.removeTab = function (tab) {
 
         var index = tabs.indexOf(tab);
