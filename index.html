@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css">
+
+
+    <script src="./bower_components/angular/angular.js"></script>
+    <script src="./bower_components/angular-aria/angular-aria.js"></script>
+    <script src="./bower_components/angular-animate/angular-animate.js"></script>
+    <script src="./bower_components/angular-material/angular-material.js"></script>
+    <script src="todoScript.js"></script>
+</head>
+<body ng-app="TodoList">
+<div ng-controller="AppCtrl">
+
+    <div class="taskAdd">
+       <div class="folder">
+           <img src="images/Places-folder-grey-icon.png" alt=""/><br/>
+           <md-button class="md-raised md-primary" ng-click="showAdvanced($event)">Add Task</md-button>
+           <b layout="row" layout-align="center center" layout-margin>
+               {{alert}}
+           </b>
+       </div>
+    </div>
+
+    <ul>
+        <li ng-repeat="i in userArr">{{i}}</li>
+    </ul>
+</div>
+
+</body>
+</html>

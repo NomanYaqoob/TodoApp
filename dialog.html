@@ -1,0 +1,27 @@
+<md-dialog aria-label="Task">
+    <md-content class="sticky-container">
+        <md-subheader class="md-sticky-no-effect">Add a Task</md-subheader>
+        <div class="dialog-content" ng-controller="inputController">
+            <div layout="column" layout-sm="column">
+                <md-input-container flex>
+                    <label>Title</label>
+                    <input ng-model="user.title" placeholder="Suitable Title">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Detail</label>
+                    <input ng-model="user.task">
+                </md-input-container>
+            </div>
+        </div>
+    </md-content>
+    <div class="md-actions" layout="row">
+
+        <span flex></span>
+        <md-button ng-click="add('not useful')">
+            Cancel
+        </md-button>
+        <md-button ng-click="add('useful')" class="md-primary">
+            Add
+        </md-button>
+    </div>
+</md-dialog>

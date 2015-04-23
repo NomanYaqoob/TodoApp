@@ -1,0 +1,19 @@
+.taskAdd {
+
+    margin:auto auto;
+    background-color: rgba(184, 194, 185, 0.4);
+    border-radius: 6px;
+    width:400px;
+    height:200px;
+}
+
+.folder{
+    text-align: center;
+
+}
+
+.folder img{
+    opacity: 0.5;
+    margin-top: 20px;
+}
+
