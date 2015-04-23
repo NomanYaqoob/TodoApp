@@ -29,7 +29,35 @@
     <ul>
         <li ng-repeat="i in userArr">{{i}}</li>
     </ul>
+
+    <div style="width:80%; margin:auto auto;padding:5px;" ng-controller="SlideView" class="sample md-whiteframe-z3" layout="column">
+        <md-content class="md-padding">
+            <md-tabs md-selected="selectedIndex" md-border-bottom>
+                <md-tab ng-repeat="tab in tabs"
+                        ng-disabled="tab.disabled"
+                        label="{{tab.title}}">
+                    <div class="demo-tab tab{{$index%4}}" style="padding: 25px; text-align: center;">
+                        <div ng-bind="tab.content"></div>
+                        <br/>
+                        <md-button class="md-primary md-raised" ng-click="removeTab( tab )" ng-disabled="tabs.length <= 0">Remove Tab</md-button>
+                    </div>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+        <form ng-submit="" layout="column" class="md-padding" style="padding-top: 0;">
+            <div layout="row" layout-sm="column">
+                <div flex style="position: relative;">
+                    <h3 class="md-subhead"
+                        style="position: absolute; bottom: 0;
+                         left: 0; margin: 0; font-weight: 500; text-transform: uppercase; line-height: 35px; white-space: nowrap;">Add a new Tab:</h3>
+                </div>
+                <md-button class="add-tab md-primary md-raised" type="submit" ng-click="addTab()" >Add Tab</md-button>
+            </div>
+        </form>
+    </div>
+
 </div>
+
 
 </body>
 </html>
