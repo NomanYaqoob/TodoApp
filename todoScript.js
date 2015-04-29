@@ -3,15 +3,20 @@
  */
 
 
-var app = angular.module('TodoList',['ngMaterial']);
+//var app = angular.module("TodoList",['','ngMaterial']);
 
+var app = angular.module("TodoList",["ngMaterial"]);
 
 app.service("UserData", function () {
     var UserTasks = [];
+    var Category = ["Work","Inbox",'Watch Movie',"Meeting"];
     this.addTask = function (object) {
-        UserTasks.push({title:object.title,task:object.task});
+        UserTasks.push({title:object.title,content:object.content,category:object.category});
     };
 
+    this.getCategories = function () {
+        return Category;
+    };
     this.getUserData = function () {
         return UserTasks;
     };
@@ -43,15 +48,8 @@ app.controller('inputController', function($scope,UserData) {
 
 });
 
-app.controller('AppCtrl', function($scope,$mdDialog,UserData) {
-    $scope.title1 = 'Button';
-    $scope.title4 = 'Warn';
-    $scope.isDisabled = true;
-    $scope.googleUrl = 'http://google.com';
-
+app.controller('AppCtrl', function($scope,$mdDialog,UserData,$timeout, $mdSidenav, $mdUtil, $log) {
     $scope.userArr = UserData.getUserData();
-
-
     $scope.showAdvanced = function(ev) {
     $mdDialog.show({
         controller: DialogController,
@@ -64,7 +62,17 @@ app.controller('AppCtrl', function($scope,$mdDialog,UserData) {
             $scope.alert = 'task Cancelled!';
         });
     };
-
+    $scope.toggleLeft = buildToggler('left');
+    function buildToggler(navID) {
+        var debounceFn =  $mdUtil.debounce(function(){
+            $mdSidenav(navID)
+                .toggle()
+                .then(function () {
+                    $log.debug("toggle " + navID + " is done");
+                });
+        },300);
+        return debounceFn;
+    }
 
 });
 
@@ -81,24 +89,24 @@ function DialogController($scope, $mdDialog,UserData) {
     };
     $scope.add = function(answer) {
         //console.log("add is called");
-        if(!($scope.user.title == "" && $scope.user.task == "" )) {
+        if(!($scope.user.title == "" && $scope.user.content == "" )) {
             UserData.addTask($scope.user);
         }
         $mdDialog.hide(answer);
-        $scope.user.title = "";
-        $scope.user.task = "";
         $mdDialog.hide();
 
     };
+
+    $scope.getAllCategories = function () {
+        return UserData.getCategories();
+    }
 }
 
 app.controller('SlideView',function($scope, $log,UserData){
-    var tabs = [
-            { title: '', content: ""}
-        ],
-        selected = null,
+
+     $scope.tabs  = UserData.getUserData();
+       var selected = null,
         previous = null;
-    $scope.tabs = tabs;
     $scope.selectedIndex = 2;
     $scope.getAllTabs = function () {
         return UserData.getUserData();
@@ -109,15 +117,7 @@ app.controller('SlideView',function($scope, $log,UserData){
         if ( old && (old != current)) $log.debug('Goodbye ' + previous.title + '!');
         if ( current )                $log.debug('Hello ' + selected.title + '!');
     });*/
-   /* $scope.addTab = function () {
-        var arr =  UserData.getUserData();
-        for (var item = 0; item < arr.length;item++) {
-            //view = view || UserData.title + " Content View";
-            console.log(arr[item]);
-            tabs.push({ title: arr[item].title, content: arr[item].task, disabled: false});
-        }
 
-    };*/
 
     /*$scope.addTab = function () {
         UserData.addTask($scope.user);
@@ -125,8 +125,17 @@ app.controller('SlideView',function($scope, $log,UserData){
     };*/
     $scope.removeTab = function (tab) {
 
-        var index = tabs.indexOf(tab);
-        tabs.splice(index, 1);
+        var index = $scope.tabs.indexOf(tab);
+        $scope.tabs.splice(index, 1);
         UserData.removeTask(tab.title,tab.content);
+    };
+});
+
+app.controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+    $scope.close = function () {
+        $mdSidenav('left').close()
+            .then(function () {
+                $log.debug("close LEFT is done");
+            });
     };
 });

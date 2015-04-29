@@ -11,45 +11,92 @@
     <script src="./bower_components/angular-aria/angular-aria.js"></script>
     <script src="./bower_components/angular-animate/angular-animate.js"></script>
     <script src="./bower_components/angular-material/angular-material.js"></script>
+    <script src="./bower_components/angular-material-icons/angular-material-icons.js"></script>
+    <link rel="stylesheet" href="./bower_components/material-date-picker/build/styles/mbdatepicker.css"/>
+    <script src="./bower_components/material-date-picker/build/mbdatepicker.js"></script>
     <script src="todoScript.js"></script>
 </head>
 <body ng-app="TodoList">
 <div ng-controller="AppCtrl">
-
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Settings">
+                <md-icon md-svg-icon="bower_components/angular-material/demos/icon/demoLoadSvgIconsFromUrl/img/icons/android.svg" ng-click="toggleLeft()"></md-icon>
+                <!--<ng-md-icon icon="send"></ng-md-icon>-->
+            </md-button>
+            <h2>
+                <span>Todo List (Your Daily Scheduler)</span>
+            </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Favorite">
+                <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="More">
+                <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
     <div class="taskAdd">
        <div class="folder">
            <img src="images/Places-folder-grey-icon.png" alt=""/><br/>
-           <md-button class="md-raised md-primary" ng-click="showAdvanced($event)">Add Task</md-button>
-           <b layout="row" layout-align="center center" layout-margin>
+           <!--<md-button class="md-raised md-primary" >Add Task</md-button>-->
+           <md-button class="md-accent" ng-click="showAdvanced($event)">Add Task</md-button>
+           <b layout="row" layout-align="center center" layout-margin style="font-size:16px;text-transform: capitalize">
                {{alert}}
            </b>
        </div>
     </div>
-    <div style="width:80%; margin:auto auto;padding:5px;" ng-controller="SlideView" class="sample md-whiteframe-z3" layout="column">
+    <div style="width:80%; margin:auto auto;padding:5px;" ng-controller="SlideView" class="sample md-whiteframe-z1" layout="column">
         <md-content class="md-padding">
             <md-tabs md-selected="selectedIndex" md-border-bottom>
-                <md-tab ng-repeat="tab in getAllTabs()"
+                <md-tab ng-repeat="tab in tabs"
                         label="{{tab.title}}">
                     <div class="demo-tab tab{{$index%4}}" style="padding: 25px; text-align: center;">
-                        <div ng-bind="tab.task"></div>
+                        <h3 ng-bind="tab.category"></h3>
+                        <div ng-bind="tab.content"></div>
                         <br/>
-                        <md-button class="md-primary md-raised" ng-click="removeTab( tab )">Remove Tab</md-button>
+                        <md-button class="md-primary md-raised" ng-click="removeTab( tab )">Remove Task</md-button>
                     </div>
                 </md-tab>
             </md-tabs>
         </md-content>
         <form ng-submit="" layout="column" class="md-padding" style="padding-top: 0;">
-            <div layout="row" layout-sm="column">
-                <!--<div flex style="position: relative;">
-                    <h3 class="md-subhead"
-                        style="position: absolute; bottom: 0;
-                         left: 0; margin: 0; font-weight: 500; text-transform: uppercase; line-height: 35px; white-space: nowrap;">Add a new Tab:</h3>
-                </div>-->
-                <!--<md-button class="add-tab md-primary md-raised" type="submit" ng-click="addTab()" >Add Tab</md-button>-->
-            </div>
         </form>
     </div>
 
+
+    <section>
+        <!--<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left">
+            <md-toolbar class="md-theme-light">
+                <h1 class="md-toolbar-tools">Add Task</h1>
+            </md-toolbar>
+            <md-content ng-controller="LeftCtrl" layout-padding>
+                <form>
+                    <md-input-container>
+                        <label for="testInput">Test input</label>
+                        <input type="text" id="testInput"
+                               ng-model="data" md-sidenav-focus>
+                    </md-input-container>
+                </form>
+                <md-button ng-click="close()" class="md-primary">
+                    Close Sidenav Right
+                </md-button>
+            </md-content>
+        </md-sidenav>-->
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools">Add Task</h1>
+            </md-toolbar>
+            <md-content layout-padding ng-controller="LeftCtrl">
+                <md-button ng-click="close()" class="md-primary">
+                    Close Sidenav Left
+                </md-button>
+                <p >
+                    This sidenav is locked open on your device. To go back to the default behavior,
+                    narrow your display.
+                </p>
+            </md-content>
+    </section>
 </div>
 
 
