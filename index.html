@@ -2,16 +2,18 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Todo App</title>
+    <!--My Style Link-->
     <link rel="stylesheet" href="style.css"/>
     <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css">
     <!--<link rel="stylesheet" href="./bower_components/angular-bootstrap/"/>-->
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 
     <script src="./bower_components/angular/angular.js"></script>
     <script src="./bower_components/angular-aria/angular-aria.js"></script>
     <script src="./bower_components/angular-animate/angular-animate.js"></script>
     <script src="./bower_components/angular-material/angular-material.js"></script>
-
+    <script src="./bower_components/angular-material-icons/angular-material-icons.js"></script>
 
     <script src="./bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
@@ -21,8 +23,8 @@
 <div ng-controller="AppCtrl">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <md-button class="md-icon-button" aria-label="Settings">
-                <md-icon md-svg-icon="bower_components/angular-material/demos/icon/demoLoadSvgIconsFromUrl/img/icons/android.svg" ng-click="toggleLeft()"></md-icon>
+            <md-button style="  margin-top: 10px;" class="md-icon-button" aria-label="Settings">
+                <ng-md-icon icon="today" style="fill:white" size="30" ng-click="toggleLeft()"></ng-md-icon>
                 <!--<ng-md-icon icon="send"></ng-md-icon>-->
             </md-button>
             <h2>
@@ -54,7 +56,9 @@
                         label="{{tab.title}}">
                     <div class="demo-tab tab{{$index%4}}" style="padding: 25px; text-align: center;">
                         <h3 ng-bind="tab.category"></h3>
+                        <div>{{tab.Taskday}}</div>
                         <div ng-bind="tab.content"></div>
+
                         <br/>
                         <md-button class="md-primary md-raised" ng-click="removeTab( tab )">Remove Task</md-button>
                     </div>
@@ -86,20 +90,18 @@
         </md-sidenav>-->
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
             <md-toolbar class="md-theme-indigo">
-                <h1 class="md-toolbar-tools">Add Task</h1>
+                <h1 class="md-toolbar-tools">View Task</h1>
             </md-toolbar>
             <md-content layout-padding ng-controller="LeftCtrl">
-                <md-button ng-click="close()" class="md-primary">
-                    Close Sidenav Left
-                </md-button>
-                <p >
-                    This sidenav is locked open on your device. To go back to the default behavior,
-                    narrow your display.
-                </p>
+                <md-list-item class="md-3-line" ng-click="navigateTo(item, $event)" ng-repeat="item in getElements">
+                    <ng-md-icon class="myIcon" icon="assignment_ind"></ng-md-icon>
+                    <div class="md-list-item-text">
+                        <h4>{{ item }}</h4>
+                    </div>
+                </md-list-item>
             </md-content>
     </section>
 </div>
-
 
 </body>
 </html>

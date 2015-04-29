@@ -1,0 +1,18 @@
+<md-dialog aria-label="Task" style="width:40% !important">
+    <md-content class="sticky-container">
+        <h4 class="md-sticky-no-effect">{{type}}</h4>
+        <md-list-item ng-repeat="item in getData | filter:{category:type}">
+            <ng-md-icon icon="description"></ng-md-icon>
+            <span>{{item.title}}</span>
+            <p>Detail: {{item.content}}</p>
+            <p>Day: {{item.Taskday}}</p>
+        </md-list-item>
+
+    </md-content>
+    <div class="md-actions" layout="row">
+
+        <span flex></span>
+        <md-button class="md-warn md-raised md-hue-2" ng-click="cancel()">Okay</md-button>
+        </div>
+
+</md-dialog>

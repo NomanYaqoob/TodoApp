@@ -3,17 +3,17 @@
  */
 
 
-//var app = angular.module("TodoList",['','ngMaterial']);
 
-var app = angular.module("TodoList",["ngMaterial"]);
+var app = angular.module("TodoList",["ngMaterial","ui.bootstrap","ngMdIcons"]);
 
 app.service("UserData", function () {
     var UserTasks = [];
     var Category = ["Work","Inbox",'Watch Movie',"Meeting"];
     this.addTask = function (object) {
-        UserTasks.push({title:object.title,content:object.content,category:object.category});
+        UserTasks.push({title:object.title,content:object.content,category:object.category,Taskday:object.Taskday});
     };
 
+    this.getTaskType = "";
     this.getCategories = function () {
         return Category;
     };
@@ -34,16 +34,6 @@ app.service("UserData", function () {
                 return i;
             }
         }
-    }
-
-});
-
-app.controller('inputController', function($scope,UserData) {
-
-    $scope.addNew = function () {
-        UserData.addTask($scope.user);
-        $scope.user.title = "";
-        $scope.user.task = "";
     }
 
 });
@@ -77,9 +67,12 @@ app.controller('AppCtrl', function($scope,$mdDialog,UserData,$timeout, $mdSidena
 });
 
 function DialogController($scope, $mdDialog,UserData) {
+    $scope.Days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     $scope.user = {
         title: "",
-        task:""
+        task:"",
+        Category:"",
+        Taskday:""
     };
     $scope.hide = function() {
         $mdDialog.hide();
@@ -131,11 +124,39 @@ app.controller('SlideView',function($scope, $log,UserData){
     };
 });
 
-app.controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+app.controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log,$mdDialog,UserData) {
     $scope.close = function () {
         $mdSidenav('left').close()
             .then(function () {
                 $log.debug("close LEFT is done");
             });
     };
+
+    $scope.Data = UserData.getUserData();
+
+    $scope.navigateTo = function(to, event) {
+        UserData.getTaskType = to;
+        $mdDialog.show({
+                controller: TaskDialogController,
+                templateUrl: 'TaskDialog.html',
+                targetEvent: event
+            }
+        ).then(function() {
+            });
+    };
+
+    $scope.getElements = UserData.getCategories();
 });
+
+
+function TaskDialogController($scope,$mdDialog,UserData) {
+
+    $scope.type = UserData.getTaskType;
+
+    $scope.getData = UserData.getUserData();
+
+    $scope.cancel = function() {
+        $mdDialog.cancel();
+    };
+}
+

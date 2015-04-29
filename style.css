@@ -1,15 +1,20 @@
+body {
+    background: rgba(189, 200, 168, 0.55) !important;
+}
+
+
 .taskAdd {
 
-    margin:auto auto;
+    margin:3% auto;
     background-color: rgba(184, 194, 185, 0.4);
     border-radius: 6px;
-    width:400px;
-    height:250px;
+    width:30%;
+    height:50%;
 }
 
 .folder{
     text-align: center;
-    margin-top: 20px;
+
 }
 
 .folder img{
@@ -17,3 +22,6 @@
     margin-top: 20px;
 }
 
+.myIcon{
+    display:inline;
+}
